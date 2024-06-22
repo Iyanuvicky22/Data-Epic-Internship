@@ -212,7 +212,7 @@ class TodoList:
 
   """
 
-  def __init__(self):
+  def __init__(self, tasks = None):
     """
     This initiates the empty to do list.
     Args:
@@ -220,9 +220,8 @@ class TodoList:
       completed_tasks: Tasks marked as completed.
       all_tasks: Prints out all tasks ever inputed. 
       deleted_tasks: A place holder for deleted tasks incase it is to be reintroduced.
-
-
     """
+    self.tasks = []
 
 
 
@@ -232,10 +231,7 @@ class TodoList:
     Args:
       task: designates the task to be added to the list.
     """
-    self.available_tasks.append(task)
-  
-  # def strike(self):
-  #   return ''.join([u'\u0336{}'.format(c) for c in self.description])
+    self.tasks.append(task)
 
   def delete_task(self, delete):
     """
@@ -243,9 +239,9 @@ class TodoList:
     Args:
       delete: designates the task to be deleted.
     """
-    task[delete] = strike(task[delete])
-    self.available_tasks.pop(delete)
-    self.deleted_tasks.append(delete)
+    # task[delete] = strike(task[delete])
+    self.tasks.pop(delete)
+    # self.deleted_tasks.append(delete)
 
   def show_tasks(self):
     """
@@ -257,7 +253,7 @@ class TodoList:
           4. All Tasks = available_task[] + completed_tasks[] + deleted_tasks[]
 
     """
-    return self.available_tasks
+    return self.tasks
     # while isinstance(task_list, int):
     #   if task_list == 1:
     #     return self.available_tasks
@@ -282,10 +278,26 @@ class TodoList:
     Args:
       mark: designates the task to be marked as complete.
     """
-    task[mark] = task[mark] + u" \u2713"
-    print(f"Task '{self.available_tasks[mark]}' is completed")
-    self.available_tasks.pop(mark)
-    self.completed_tasks.append(mark)
+    self.tasks[mark] = self.tasks[mark] + u" \u2713"
+    # print(f"Task '{self.tasks[mark]}' is completed")
+    self.tasks.pop(mark)
+    # self.completed_tasks.append(mark)
+
+
+wale = TodoList()
+wale.add_task('Adobe')
+wale.add_task('Mexzy')
+wale.add_task('Church')
+wale.add_task('Fuel')
+
+print(wale.tasks)
+
+wale.delete_task(1)
+
+print(wale.show_tasks())
+
+print(wale.mark_as_completed(2))
+
 
 # todo_list = TodoList()
 # todo_list.add_task(Adele)
@@ -310,6 +322,7 @@ def main():
 
         """        
         if choice == '1':
+          task = input("Enter the task description: ")
           while True:
             item_type = {'Event' : Event(description, location, time, day), 'Task': Task(description)}
             for item in item_type:
@@ -318,13 +331,13 @@ def main():
               print('Press 2 for Task!')
               choice = input("Insert your item")
               if item == '1':
-                task = Event(description, location, time, day)
-              elif item == '2':
                 task = Task(description)
+              elif item == '2':
+                task = Event(description, location, time, day)
               else:
                 print('Invalid input! Try again')
                 break
-            description = input("Enter the task description: ")
+            # task = input("Enter the task description: ")
             todo_list.add_task(task)
         elif choice == '2':
             task_id = input("Enter the task ID to delete: ")
