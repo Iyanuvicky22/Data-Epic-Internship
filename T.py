@@ -75,7 +75,7 @@
 
 
 
-# # %%
+# # # %%
 # # Create a new todo list
 # my_todo_list = TodoList()
 
@@ -138,16 +138,17 @@ class Item:
         status: Specifies the completion status of the item. Default is False.
 
       """
-      self.description = description
-      self.status = False
+      # self.description = description
+      # self.status = False
   
 
-  def details(self):
+  def details(self, description):
       """
       Prints out the details of the described item.
 
       """
-      print(f'{self.description}')
+      self.description = description
+      return f'{self.description}'
     
 
 class Task(Item):
@@ -155,23 +156,23 @@ class Task(Item):
   This is a child class of the Item class. It creates an task as an instance of an Item.
 
   """  
-  def __init__(self, description, status=None):
+  def __init__(self, status=None):
     """
     This initiates the instance of the item class.
     Args:
       description: Describes the item.
       status: Identifies the status of the task. Default is False.    
     """
-    super().__init__(description)
     self.status = False
     
       
-  def details(self):
+  def details(self, description):
     """
     Prints out the details of the described task.
 
     """
-    print(f'{self.description}, while it\'s completion status is {self.status}') 
+    self.description = description
+    return f'{self.description}, while it\'s completion status is {self.status}'
 
 
 class Event(Item):  
@@ -179,7 +180,7 @@ class Event(Item):
   This is a child class of the Item class. It creates an event as an instance of an Item.
 
   """   
-  def __init__(self, description, location, time, day):
+  def __init__(self):
     """
     This initiates the instance of the item class.
     Args:
@@ -188,21 +189,25 @@ class Event(Item):
       time: Specifies the time of the day.
       day:  Specified the day of the event.
     """    
-    super().__init__(description)
-    self.location = location
-    self.time = time
-    self.day = day
+    # super().__init__(description)
+    # self.location = location
+    # self.time = time
+    # self.day = day
 
-  def details(self):
+  def details(self,description, location, time, day):
     """
     Prints out the details of the described task.
 
     """
-    print(f'{self.description} on {self.location} by {self.time} on {self.day}.')
+    self.description = description
+    self.location = location
+    self.time = time
+    self.day = day
+    return f'{self.description} on {self.location} by {self.time} on {self.day}.'
     
 
-task_1 = Event('Finish OOP Advanced Task', 'Github', '12:00', 'Saturday')
-task_1.details()
+task_1 = Event()
+print(task_1.details('Finish OOP Advanced Task', 'Github', '12:00', 'Saturday'))
 
 
 class TodoList:
@@ -211,6 +216,9 @@ class TodoList:
   Tasks can be added, deleted, displayed and marked as completed
 
   """
+
+  # choice = int(input('Select 1 for Event & 2 for Task:'))
+  # description = []
 
   def __init__(self, tasks = None):
     """
@@ -225,13 +233,16 @@ class TodoList:
 
 
 
-  def add_task(self, task):
+  def add_task(self, item):
     """
     This method adds a task to the todo list
     Args:
       task: designates the task to be added to the list.
     """
-    self.tasks.append(task)
+    item = Task.details(description)
+    self.tasks.append(item)
+
+  # def add_
 
   def delete_task(self, delete):
     """
@@ -299,83 +310,86 @@ print(wale.show_tasks())
 print(wale.mark_as_completed(2))
 
 
-# todo_list = TodoList()
-# todo_list.add_task(Adele)
+# ife = TodoList()
 
-def main():
-    # Creating TodoList Object
-    todo_list = TodoList()
+print(TodoList.add_task('Adele'))#, location = 'Zoom', time = '20:48', day = 'Saturday', type = 'event')
+
+# def main():
+#     # Creating TodoList Object
+#     todo_list = TodoList()
     
-    while True:
-        """
+#     while True:
+#         """
 
-        """     
-        print("\nTodo List Menu:")
-        print("1. Add Task")
-        print("2. Delete Task")
-        print("3. Show Tasks")
-        print("4. Mark Task as Completed")
-        print("5. Exit")
+
+#         """     
+#         print("\nTodo List Menu:")
+#         print("1. Add Task")
+#         print("2. Add Event")
+#         print("3. Delete Task")
+#         print("4. Show Tasks")
+#         print("5. Mark Task as Completed")
+#         print("6. Exit")
         
-        choice = input("Enter your choice: ")
-        """
+#         choice = input("Enter your choice: ")
+#         """
 
-        """        
-        if choice == '1':
-          task = input("Enter the task description: ")
-          while True:
-            item_type = {'Event' : Event(description, location, time, day), 'Task': Task(description)}
-            for item in item_type:
-              print('Is the item an event or task?')
-              print('Press 1 for Event!')
-              print('Press 2 for Task!')
-              choice = input("Insert your item")
-              if item == '1':
-                task = Task(description)
-              elif item == '2':
-                task = Event(description, location, time, day)
-              else:
-                print('Invalid input! Try again')
-                break
-            # task = input("Enter the task description: ")
-            todo_list.add_task(task)
-        elif choice == '2':
-            task_id = input("Enter the task ID to delete: ")
-            todo_list.delete_task(task_id)
-        elif choice == '3':
-            todo_list.show_tasks()
-          # while True:
-          #   print('\nTasks List to Show')
-          #   print('1. Available Tasks')
-          #   print('2. Completed Tasks')
-          #   print('3. Deleted Tasks')
-          #   print('4. All Tasks')
+#         """        
+#         if choice == '1':
+#           # task = input("Enter the task description: ")
+#           while True:
+#             item_type = {'Event' : Event(), 'Task': Task()}
+#             for item in item_type:
+#               print('Is the item an event or task?')
+#               print('Press 1 for Event!')
+#               print('Press 2 for Task!')
+#               # choice = int(input("Insert your item"))
+#               if item == item_type['Event']:
+#                 task = Event(ddescription, location, time, day)
+#               elif item == item_type['Task']:
+#                 task = Task(description)
+#               else:
+#                 print('Invalid input! Try again')
+#                 break
+#             # task = input("Enter the task description: ")
+#             todo_list.add_task(task)
+#         elif choice == '2':
+#             task_id = input("Enter the task ID to delete: ")
+#             todo_list.delete_task(task_id)
+#         elif choice == '3':
+#             todo_list.show_tasks()
+#           # while True:
+#           #   print('\nTasks List to Show')
+#           #   print('1. Available Tasks')
+#           #   print('2. Completed Tasks')
+#           #   print('3. Deleted Tasks')
+#           #   print('4. All Tasks')
 
-          #   choice = int(input('Enter your choice: '))
+#           #   choice = int(input('Enter your choice: '))
 
-          #   if choice == 1:
-          #     return todo_list.show_tasks
-          #   elif choice == 2:
-          #     return todo_list.show_tasks
-          #   elif choice == 3:
-          #     return todo_list.show_tasks
-          #   elif choice == 4:
-          #     return todo_list.show_tasks
-          #   else:
-          #     print('Wrong input! There is no such tasks list. TRY AGAIN!!!')
-          #     break
-        elif choice == '4':
-            task_id = input("Enter the task ID to mark as completed: ")
-            todo_list.mark_as_completed(task_id)
-        elif choice == '5':
-            print("Exiting the Todo List app. Goodbye!")
-            break
-        else:
-            print("Invalid choice. Please try again.")
+#           #   if choice == 1:
+#           #     return todo_list.show_tasks
+#           #   elif choice == 2:
+#           #     return todo_list.show_tasks
+#           #   elif choice == 3:
+#           #     return todo_list.show_tasks
+#           #   elif choice == 4:
+#           #     return todo_list.show_tasks
+#           #   else:
+#           #     print('Wrong input! There is no such tasks list. TRY AGAIN!!!')
+#           #     break
+#         elif choice == '4':
+#             task_id = input("Enter the task ID to mark as completed: ")
+#             todo_list.mark_as_completed(task_id)
+#         elif choice == '5':
+#             print("Exiting the Todo List app. Goodbye!")
+#             break
+#         else:
+#             print("Invalid choice. Please try again.")
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
 
 
