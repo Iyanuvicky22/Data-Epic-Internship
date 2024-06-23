@@ -1,104 +1,4 @@
 # %% [markdown]
-# # Create a Class:
-# Define a class named TodoList.
-# 
-# 
-# ### Methods to Implement:
-# 
-# ```Add Task:``` A method to add a new task to the todo list.
-# 
-# ```Delete Task:``` A method to delete a task from the todo list.
-# 
-# ```Show All Tasks:``` A method to display all tasks in the todo list.
-# Mark Task as Completed: A method to mark a task as completed.
-# 
-# ```Version Control:```
-# Make sure to make commits of your task to the Data Epic organization Git repository. Check for a reminder on how to do that in ⁠task-submission
-# Follow proper commit messages and structure for your commits.
-# 
-# ```Deadline:```
-# The task is due by Friday at 12pm.
-
-# %%
-# class TodoList:
-#   """
-#   This is a class that creates a Todo List
-#   Tasks can be added, deleted, displayed and marked as completed
-
-#   """
-
-#   def __init__(self):
-#     """
-#     This initiates the empty to do list.
-
-#     """
-#     self.todo_list = []
-#     self.completed_tasks = []
-#     self.all_tasks = []
-
-
-#   def add_task(self, add):
-#     """
-#     This method adds a task to the todo list
-#     Args:
-#       add: designates the task to be added to the list.
-#     """
-#     add = str(add)
-#     self.todo_list.append(add)
-
-#   def delete_task(self, delete):
-#     """
-#     This methods deletes a listed task from the list.
-#     Args:
-#       delete: designates the task to be deleted.
-#     """
-#     self.todo_list.pop(delete)
-
-#   def show_all_task(self):
-#     """
-
-#     Returns: This method shows the available tasks in the list.
-
-#     """
-#     return self.todo_list
-
-#   def mark_as_completed(self, mark):
-#     """
-#     This method marks a task as completed.
-#     Args:
-#       mark: designates the task to be marked as complete.
-#     """
-#     print(f"Task '{self.todo_list[mark]}' is completed")
-#     self.todo_list.pop(mark)
-#     self.completed_tasks.append(mark)
-
-
-
-
-# # # %%
-# # Create a new todo list
-# my_todo_list = TodoList()
-
-# # Add tasks
-# my_todo_list.add_task("Finish Python assignment")
-# my_todo_list.add_task("Read OOP chapter")
-
-# # Show all tasks
-# my_todo_list.show_all_task()
-
-# # Mark the first task as completed
-# my_todo_list.mark_as_completed(0)
-
-# # Show all tasks again to see the updates
-# my_todo_list.show_all_task()
-
-# # Delete the second task
-# my_todo_list.delete_task(0)
-
-# # Show all tasks again to see the updates
-# my_todo_list.show_all_task()
-
-# %% [markdown]
 # #### Task Details
 # 
 # ```Create a Base Class:```Define a base class called Item that will have common attributes and methods which can be inherited. For example, each item might have a description and a status (completed or not).
@@ -138,16 +38,16 @@ class Item:
         status: Specifies the completion status of the item. Default is False.
 
       """
-      # self.description = description
-      # self.status = False
+      self.description = description
+      self.status = False
   
 
-  def details(self, description):
+  def details(self):
       """
       Prints out the details of the described item.
 
       """
-      self.description = description
+      # self.description = description
       return f'{self.description}'
     
 
@@ -156,22 +56,22 @@ class Task(Item):
   This is a child class of the Item class. It creates an task as an instance of an Item.
 
   """  
-  def __init__(self, status=None):
+  def __init__(self, description, status=None):
     """
     This initiates the instance of the item class.
     Args:
       description: Describes the item.
       status: Identifies the status of the task. Default is False.    
     """
+    super().__init__(description)
     self.status = False
     
       
-  def details(self, description):
+  def details(self):
     """
     Prints out the details of the described task.
 
     """
-    self.description = description
     return f'{self.description}, while it\'s completion status is {self.status}'
 
 
@@ -180,7 +80,7 @@ class Event(Item):
   This is a child class of the Item class. It creates an event as an instance of an Item.
 
   """   
-  def __init__(self):
+  def __init__(self, description, location = None , time = None, day = None ):
     """
     This initiates the instance of the item class.
     Args:
@@ -189,25 +89,24 @@ class Event(Item):
       time: Specifies the time of the day.
       day:  Specified the day of the event.
     """    
-    # super().__init__(description)
-    # self.location = location
-    # self.time = time
-    # self.day = day
+    super().__init__(description)
+    self.location = location
+    self.time = time
+    self.day = day
 
-  def details(self,description, location, time, day):
+  def details(self):
     """
     Prints out the details of the described task.
 
     """
-    self.description = description
-    self.location = location
-    self.time = time
-    self.day = day
     return f'{self.description} on {self.location} by {self.time} on {self.day}.'
     
 
-task_1 = Event()
-print(task_1.details('Finish OOP Advanced Task', 'Github', '12:00', 'Saturday'))
+task_1 = Event('Finish OOP Advanced Task', 'Github', '12:00', 'Saturday')
+print(task_1.details())
+
+task_2 = Task("Adele")
+print(task_2.details())
 
 
 class TodoList:
@@ -220,7 +119,7 @@ class TodoList:
   # choice = int(input('Select 1 for Event & 2 for Task:'))
   # description = []
 
-  def __init__(self, tasks = None):
+  def __init__(self):
     """
     This initiates the empty to do list.
     Args:
@@ -233,16 +132,20 @@ class TodoList:
 
 
 
-  def add_task(self, item):
+  def add_task(self, description):
     """
     This method adds a task to the todo list
     Args:
       task: designates the task to be added to the list.
     """
-    item = Task.details(description)
+    item = Task(description)
+    item = item.details()
     self.tasks.append(item)
 
-  # def add_
+  def add_event(self, description,location,time, day):
+    event = Event(description,location,time, day)
+    event = event.details()
+    self.tasks.append(event)
 
   def delete_task(self, delete):
     """
@@ -265,23 +168,6 @@ class TodoList:
 
     """
     return self.tasks
-    # while isinstance(task_list, int):
-    #   if task_list == 1:
-    #     return self.available_tasks
-    #   elif task_list == 2:
-    #     for item in self.completed_tasks:
-    #       item = strike(item)
-    #     return self.completed_tasks
-    #   elif task_list == 3:
-    #     return self.deleted_tasks
-    #   elif task_list == 4:
-    #     self.all_tasks = self.available_tasks + self.completed_tasks + \
-    #       self.deleted_tasks
-    #     return self.all_tasks
-    #   else: 
-    #     print('Input not recognized! Kindly choose between 1 and 4')
-    #     break
-    # return self.available_tasks
 
   def mark_as_completed(self, mark):
     """
@@ -289,167 +175,71 @@ class TodoList:
     Args:
       mark: designates the task to be marked as complete.
     """
-    self.tasks[mark] = self.tasks[mark] + u" \u2713"
-    # print(f"Task '{self.tasks[mark]}' is completed")
+    print(f"Task '{self.tasks[mark]}' is completed")
     self.tasks.pop(mark)
     # self.completed_tasks.append(mark)
 
 
-wale = TodoList()
-wale.add_task('Adobe')
-wale.add_task('Mexzy')
-wale.add_task('Church')
-wale.add_task('Fuel')
+# TodoList().add_task('Adele')#location = 'Zoom', time = '20:48', day = 'Saturday', type = 'event'))
+# TodoList().add_event('Finish OOP Advanced Task', 'Github', '12:00', 'Saturday')
 
-print(wale.tasks)
+# aa = TodoList()
+# aa.add_task('Adele')
+# aa.add_event('Finish OOP Advanced Task', 'Github', '12:00', 'Saturday')
+# print(aa.show_tasks())
 
-wale.delete_task(1)
-
-print(wale.show_tasks())
-
-print(wale.mark_as_completed(2))
-
-
-# ife = TodoList()
-
-print(TodoList.add_task('Adele'))#, location = 'Zoom', time = '20:48', day = 'Saturday', type = 'event')
-
-# def main():
-#     # Creating TodoList Object
-#     todo_list = TodoList()
+def main():
+    # Creating TodoList Object
+    todo_list = TodoList()
     
-#     while True:
-#         """
+    while True:
+        """
 
 
-#         """     
-#         print("\nTodo List Menu:")
-#         print("1. Add Task")
-#         print("2. Add Event")
-#         print("3. Delete Task")
-#         print("4. Show Tasks")
-#         print("5. Mark Task as Completed")
-#         print("6. Exit")
+        """     
+        print("\nTodo List Menu:")
+        print("1. Add Task")
+        print("2. Add Event")
+        print("3. Delete Task")
+        print("4. Show Tasks")
+        print("5. Mark Task as Completed")
+        print("6. Exit")
         
-#         choice = input("Enter your choice: ")
-#         """
+        choice = input("Enter your choice: ")
+        """
 
-#         """        
-#         if choice == '1':
-#           # task = input("Enter the task description: ")
-#           while True:
-#             item_type = {'Event' : Event(), 'Task': Task()}
-#             for item in item_type:
-#               print('Is the item an event or task?')
-#               print('Press 1 for Event!')
-#               print('Press 2 for Task!')
-#               # choice = int(input("Insert your item"))
-#               if item == item_type['Event']:
-#                 task = Event(ddescription, location, time, day)
-#               elif item == item_type['Task']:
-#                 task = Task(description)
-#               else:
-#                 print('Invalid input! Try again')
-#                 break
-#             # task = input("Enter the task description: ")
-#             todo_list.add_task(task)
-#         elif choice == '2':
-#             task_id = input("Enter the task ID to delete: ")
-#             todo_list.delete_task(task_id)
-#         elif choice == '3':
-#             todo_list.show_tasks()
-#           # while True:
-#           #   print('\nTasks List to Show')
-#           #   print('1. Available Tasks')
-#           #   print('2. Completed Tasks')
-#           #   print('3. Deleted Tasks')
-#           #   print('4. All Tasks')
-
-#           #   choice = int(input('Enter your choice: '))
-
-#           #   if choice == 1:
-#           #     return todo_list.show_tasks
-#           #   elif choice == 2:
-#           #     return todo_list.show_tasks
-#           #   elif choice == 3:
-#           #     return todo_list.show_tasks
-#           #   elif choice == 4:
-#           #     return todo_list.show_tasks
-#           #   else:
-#           #     print('Wrong input! There is no such tasks list. TRY AGAIN!!!')
-#           #     break
-#         elif choice == '4':
-#             task_id = input("Enter the task ID to mark as completed: ")
-#             todo_list.mark_as_completed(task_id)
-#         elif choice == '5':
-#             print("Exiting the Todo List app. Goodbye!")
-#             break
-#         else:
-#             print("Invalid choice. Please try again.")
+        """        
+        if choice == '1':
+          task = input("Enter the task description: ")
+          todo_list.add_task(task)
+        elif choice == '2':
+          event = input("Enter the event description: ")
+          loc= input("Enter the location of the event: ")
+          ti = input("Enter the time of the event: ")
+          dy = input("Enter the day of the event: ")
+          todo_list.add_event(event, location=loc, time=ti, day=dy)
+        elif choice == '3':
+          task_id = int(input("Enter the task ID to delete: "))
+          todo_list.delete_task(task_id)       
+        elif choice == '4':
+          print(todo_list.show_tasks())
+        elif choice == '5':
+          task_id = int(input("Enter the task ID to mark as completed: "))
+          todo_list.mark_as_completed(task_id)
+        elif choice == '6':
+          print("Exiting the Todo List app. Goodbye!")
+          break
+        else:
+            print("Invalid choice. Please try again.")
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
 
 
 
 
 # %%
-
-# Create Class Todolist
-# class Todolist:
-
-# 	# Initiate class Todolist with "date" and list("tasks") class attributes
-#     def __init__(self, date, tasks = []):
-#     	self.date = date
-#     	self.tasks = tasks
-        
-#     # Method to add task to the list where "task" attribute is the new task   
-#     def add_task(self, task):
-#         self.tasks.append(task)
-
-#     # Method to mark task as complete where "x" is the index of completed task
-#     def mark_as_complete(self, x):
-#     	self.tasks[x] = self.tasks[x] + u" \u2713" # mark sign
-
-#     # Method to delete task "x" is the index of task to be deleted
-#     def delete_task(self, x):
-#     	del(self.tasks[x])
-
-#     # Method to make a line by line list of tasks
-#     def li(self, x):
-#     	for i in x:
-#     		print(f"{i}\n") 
-
-#     # Method to show tasks 
-#     def show_tasks(self):
-#        print(f"Your Tasks For {self.date} are:\n") # heading
-#        self.li(self.tasks) # line by line list
-
-
-#Test ----------------------------------------------------
-
-# # instance of the class Todolist
-# todo = Todolist("20/05/2024", [])
-# # add a task
-# todo.add_task("Wake up")
-# # add a task
-# todo.add_task("Brush teeth")
-# # add a task
-# todo.add_task("Perform ablution")
-# # add a task
-# todo.add_task('Pray')
-# # add a task
-# todo.add_task("Take a bath")
-# # mark third task as complete
-# todo.mark_as_complete(2)
-# todo.mark_as_complete(3)
-# # show all tasks
-# todo.show_tasks()
-# # delete second task
-# todo.delete_task(1)
-# # show all task
-# todo.show_tasks()
 
 # %%
 
@@ -461,11 +251,5 @@ print(TodoList.add_task('Adele'))#, location = 'Zoom', time = '20:48', day = 'Sa
 
 
 # %%
-
-# Edited
-
-# As pointed out by roippi other answers so far are actually correct, and this one below is wrong. Leaving it here in case others get the same wrong idea that I did.
-
-# Other answers so far are wrong - they do not strike out the first character of the string. Try this instead:
 
 
